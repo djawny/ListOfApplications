@@ -28,8 +28,8 @@ public class AppDetailsDialogFragment extends DialogFragment {
         // Required empty public constructor
     }
 
-    public static SettingsDialogFragment newInstance() {
-        return new SettingsDialogFragment();
+    public static AppDetailsDialogFragment newInstance() {
+        return new AppDetailsDialogFragment();
     }
 
     @NonNull
@@ -37,7 +37,6 @@ public class AppDetailsDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_app_details_dialog, null);
         ButterKnife.bind(this, view);
-
 
         return new AlertDialog.Builder(getActivity())
                 .setView(view)

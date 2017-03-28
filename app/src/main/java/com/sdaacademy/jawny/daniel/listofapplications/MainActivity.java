@@ -33,6 +33,10 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         showSnackBar();
         setRecycleView();
+
+//        AppDetailsDialogFragment appDetailsDialogFragment = AppDetailsDialogFragment.newInstance();
+//        appDetailsDialogFragment.setCancelable(false);
+//        appDetailsDialogFragment.show(getSupportFragmentManager(), "");
     }
 
     private void setRecycleView() {
