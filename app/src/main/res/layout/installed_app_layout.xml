@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="60dp"
+    xmlns:tool="http://schemas.android.com/tools"
     android:orientation="horizontal"
-    android:background="@color/accent"
     android:weightSum="10">
 
     <ImageView
@@ -20,6 +20,7 @@
         android:textSize="16sp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="8" />
+        android:layout_weight="8"
+        tool:text="item"/>
 
 </LinearLayout>
