@@ -13,13 +13,10 @@ import android.widget.CheckBox;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SettingsDialogFragment extends DialogFragment {
+public class AppDetailsDialogFragment extends DialogFragment {
 
-    public static final String TAG = SettingsDialogFragment.class.getSimpleName();
-    @BindView(R.id.show_app_check_box)
-    CheckBox mShowAppCheckBox;
 
-    public SettingsDialogFragment() {
+    public AppDetailsDialogFragment() {
         // Required empty public constructor
     }
 
@@ -34,17 +31,11 @@ public class SettingsDialogFragment extends DialogFragment {
         ButterKnife.bind(this, view);
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
-                .setTitle("Settings")
+                .setTitle("App details")
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (mShowAppCheckBox.isChecked()) {
-                            Log.d(TAG, "checked");
 
-                        } else {
-                            Log.d(TAG, "unchecked");
-
-                        }
                     }
                 })
                 .create();
