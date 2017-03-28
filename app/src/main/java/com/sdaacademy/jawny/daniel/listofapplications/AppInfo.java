@@ -3,22 +3,22 @@ package com.sdaacademy.jawny.daniel.listofapplications;
 import android.graphics.drawable.Drawable;
 
 public class AppInfo {
-    private int uId;
+    private int uid;
     private String name;
     private Drawable icon;
 
-    public AppInfo(int uId, String name, Drawable icon) {
-        this.uId = uId;
+    public AppInfo(int uid, String name, Drawable icon) {
+        this.uid = uid;
         this.name = name;
         this.icon = icon;
     }
 
-    public int getuId() {
-        return uId;
+    public int getUid() {
+        return uid;
     }
 
-    public void setuId(int uId) {
-        this.uId = uId;
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public String getName() {

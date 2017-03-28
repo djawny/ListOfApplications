@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.main_activity_layout)
     CoordinatorLayout mMainLayout;
+
+    @BindView(R.id.recycle_view)
+    RecyclerView mRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +60,6 @@ public class MainActivity extends AppCompatActivity {
     private void openSettings() {
         SettingsDialogFragment settingsDialogFragment = SettingsDialogFragment.newInstance();
         settingsDialogFragment.setCancelable(false);
-        settingsDialogFragment.show(getSupportFragmentManager(),"");
+        settingsDialogFragment.show(getSupportFragmentManager(), "");
     }
 }
