@@ -32,7 +32,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         showSnackBar();
+        setRecycleView();
+    }
 
+    private void setRecycleView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(new InstalledAppsAdapter(getFakeList()));
     }
