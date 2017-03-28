@@ -15,29 +15,29 @@ import butterknife.ButterKnife;
 
 public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdapter.InstallAppsViewHolder> {
 
-    private List<AppInfo> mApps = new ArrayList<>();
+    private List<AppInfo> appInfoList = new ArrayList<>();
 
-    public InstalledAppsAdapter(List<AppInfo> mApps) {
-        if (mApps != null) {
-            this.mApps.addAll(mApps);
+    public InstalledAppsAdapter(List<AppInfo> appInfoList) {
+        if (appInfoList != null) {
+            this.appInfoList.addAll(appInfoList);
         }
     }
 
     @Override
     public InstallAppsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.app_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.install_app_layout, parent, false);
         return new InstallAppsViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(InstallAppsViewHolder holder, int position) {
-        AppInfo appInfo = mApps.get(position);
+        AppInfo appInfo = appInfoList.get(position);
         holder.mName.setText(appInfo.getName());
     }
 
     @Override
     public int getItemCount() {
-        return mApps != null ? mApps.size() : 0;
+        return appInfoList != null ? appInfoList.size() : 0;
     }
 
     static class InstallAppsViewHolder extends RecyclerView.ViewHolder {
