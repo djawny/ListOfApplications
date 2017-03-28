@@ -25,7 +25,7 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
 
     @Override
     public InstallAppsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.install_app_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.installed_app_layout, parent, false);
         return new InstallAppsViewHolder(view);
     }
 
