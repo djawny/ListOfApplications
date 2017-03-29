@@ -55,9 +55,9 @@ public class AppDetailsDialogFragment extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_app_details_dialog, null);
         ButterKnife.bind(this, view);
 
-        mUid.setText(String.valueOf(appInfo.getUid()));
-        mName.setText(appInfo.getName());
-//        mIcon.setImageDrawable(appInfo.getIcon());
+        mUid.setText(String.format("UID: %s", String.valueOf(appInfo.getUid())));
+        mName.setText(String.format("Name: %s", appInfo.getName()));
+        mIcon.setImageDrawable(appInfo.getIcon());
 
         return new AlertDialog.Builder(getActivity())
                 .setView(view)

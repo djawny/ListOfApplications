@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class AppInfo implements Parcelable{
+public class AppInfo implements Parcelable {
     private int uid;
     private String name;
     private Drawable icon;
@@ -36,24 +36,12 @@ public class AppInfo implements Parcelable{
         return uid;
     }
 
-    public void setUid(int uid) {
-        this.uid = uid;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Drawable getIcon() {
         return icon;
-    }
-
-    public void setIcon(Drawable icon) {
-        this.icon = icon;
     }
 
     @Override
