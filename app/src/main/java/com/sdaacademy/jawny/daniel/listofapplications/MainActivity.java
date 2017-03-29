@@ -83,12 +83,6 @@ public class MainActivity extends AppCompatActivity {
         SettingsDialogFragment settingsDialogFragment = SettingsDialogFragment.newInstance();
         settingsDialogFragment.setCancelable(false);
         settingsDialogFragment.show(getSupportFragmentManager(), "");
-        Bundle arguments = settingsDialogFragment.getArguments();
-        if (arguments.getBoolean(CHECK_BOX)) {
-            mRecyclerView.setVisibility(View.VISIBLE);
-        } else {
-            mRecyclerView.setVisibility(View.INVISIBLE);
-        }
     }
 
 

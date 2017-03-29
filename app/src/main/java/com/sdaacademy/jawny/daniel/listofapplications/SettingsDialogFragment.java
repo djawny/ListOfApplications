@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -44,12 +43,10 @@ public class SettingsDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (mShowAppCheckBox.isChecked()) {
                             Log.d(TAG, "checked");
-                            bundle.putBoolean(CHECK_BOX, true);
-                            setArguments(bundle);
+
                         } else {
                             Log.d(TAG, "unchecked");
-                            bundle.putBoolean("check_box", false);
-                            setArguments(bundle);
+
                         }
                     }
                 })
