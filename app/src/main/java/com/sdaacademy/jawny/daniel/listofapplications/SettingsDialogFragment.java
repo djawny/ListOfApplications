@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
@@ -16,8 +17,12 @@ import butterknife.ButterKnife;
 public class SettingsDialogFragment extends DialogFragment {
 
     public static final String TAG = SettingsDialogFragment.class.getSimpleName();
+
     @BindView(R.id.show_app_check_box)
     CheckBox mShowAppCheckBox;
+
+//    @BindView(R.id.recycle_view)
+//    RecyclerView mRecyclerView;
 
     public SettingsDialogFragment() {
         // Required empty public constructor
@@ -40,10 +45,10 @@ public class SettingsDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (mShowAppCheckBox.isChecked()) {
                             Log.d(TAG, "checked");
-
+//                            mRecyclerView.setVisibility(View.VISIBLE);
                         } else {
                             Log.d(TAG, "unchecked");
-
+//                            mRecyclerView.setVisibility(View.INVISIBLE);
                         }
                     }
                 })

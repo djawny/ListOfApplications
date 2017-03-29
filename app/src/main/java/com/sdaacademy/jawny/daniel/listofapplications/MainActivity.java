@@ -1,11 +1,14 @@
 package com.sdaacademy.jawny.daniel.listofapplications;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
+    private PackageManager packageManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 //        AppDetailsDialogFragment appDetailsDialogFragment = AppDetailsDialogFragment.newInstance();
 //        appDetailsDialogFragment.setCancelable(false);
 //        appDetailsDialogFragment.show(getSupportFragmentManager(), "");
+        getAppInfos();
     }
 
     private void setRecycleView() {
@@ -92,5 +97,23 @@ public class MainActivity extends AppCompatActivity {
         SettingsDialogFragment settingsDialogFragment = SettingsDialogFragment.newInstance();
         settingsDialogFragment.setCancelable(false);
         settingsDialogFragment.show(getSupportFragmentManager(), "");
+    }
+
+    private List<AppInfo> getAppInfos() {
+        packageManager = this.getPackageManager();
+        List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+        List<AppInfo> appInfos = formatToAppInfo(applicationInfos);
+        return null;
+    }
+
+    private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos) {
+        List<AppInfo> formattedAppInfos = new ArrayList<>();
+        for (ApplicationInfo applicationInfo : applicationInfos) {
+            formattedAppInfos.add(new AppInfo(applicationInfo.uid
+                    , applicationInfo.loadLabel(packageManager).toString()
+                    , applicationInfo.loadIcon(packageManager))
+            );
+        }
+        return formattedAppInfos;
     }
 }

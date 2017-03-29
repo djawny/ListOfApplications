@@ -36,4 +36,9 @@ public class AppInfo {
     public void setIcon(Drawable icon) {
         this.icon = icon;
     }
+
+    @Override
+    public String toString() {
+        return "AppInfo{" + "uid=" + uid + ", name='" + name + '\'' + '}';
+    }
 }
