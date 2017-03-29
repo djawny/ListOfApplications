@@ -41,12 +41,11 @@ public class MainActivity extends AppCompatActivity {
 //        AppDetailsDialogFragment appDetailsDialogFragment = AppDetailsDialogFragment.newInstance();
 //        appDetailsDialogFragment.setCancelable(false);
 //        appDetailsDialogFragment.show(getSupportFragmentManager(), "");
-        getAppInfos();
     }
 
     private void setRecycleView() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new InstalledAppsAdapter(getFakeList()));
+        mRecyclerView.setAdapter(new InstalledAppsAdapter(getAppInfos()));
     }
 
     private void showSnackBar() {
@@ -60,24 +59,7 @@ public class MainActivity extends AppCompatActivity {
         snackbar.show();
     }
 
-    private List<AppInfo> getFakeList() {
-        List<AppInfo> appInfos = new ArrayList<>();
-        appInfos.add(new AppInfo(0, "nazwa 1", null));
-        appInfos.add(new AppInfo(0, "nazwa 2", null));
-        appInfos.add(new AppInfo(0, "nazwa 3", null));
-        appInfos.add(new AppInfo(0, "nazwa 4", null));
-        appInfos.add(new AppInfo(0, "nazwa 5", null));
-        appInfos.add(new AppInfo(0, "nazwa 6", null));
-        appInfos.add(new AppInfo(0, "nazwa 7", null));
-        appInfos.add(new AppInfo(0, "nazwa 8", null));
-        appInfos.add(new AppInfo(0, "nazwa 9", null));
-        appInfos.add(new AppInfo(0, "nazwa 10", null));
-        appInfos.add(new AppInfo(0, "nazwa 11", null));
-        appInfos.add(new AppInfo(0, "nazwa 12", null));
-        return appInfos;
-    }
-
-    @Override
+     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -103,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         packageManager = this.getPackageManager();
         List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
         List<AppInfo> appInfos = formatToAppInfo(applicationInfos);
-        return null;
+        return appInfos;
     }
 
     private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos) {

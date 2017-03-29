@@ -33,6 +33,7 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
     public void onBindViewHolder(InstallAppsViewHolder holder, int position) {
         AppInfo appInfo = appInfoList.get(position);
         holder.mName.setText(appInfo.getName());
+        holder.mIcon.setImageDrawable(appInfo.getIcon());
     }
 
     @Override
