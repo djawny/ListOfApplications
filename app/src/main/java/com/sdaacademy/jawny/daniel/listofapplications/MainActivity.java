@@ -2,16 +2,17 @@ package com.sdaacademy.jawny.daniel.listofapplications;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,22 +31,21 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
     private PackageManager packageManager;
 
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        showSnackBar();
-        setRecycleView();
-
-//        AppDetailsDialogFragment appDetailsDialogFragment = AppDetailsDialogFragment.newInstance();
-//        appDetailsDialogFragment.setCancelable(false);
-//        appDetailsDialogFragment.show(getSupportFragmentManager(), "");
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        inflateRecycleView();
     }
 
-    private void setRecycleView() {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setAdapter(new InstalledAppsAdapter(getAppInfos()));
+    private void inflateRecycleView() {
+        InstalledAppsAsyncTask installedAppsAsyncTask = new InstalledAppsAsyncTask();
+        installedAppsAsyncTask.execute();
     }
 
     private void showSnackBar() {
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         snackbar.show();
     }
 
-     @Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_activity_menu, menu);
         return super.onCreateOptionsMenu(menu);
@@ -81,21 +81,48 @@ public class MainActivity extends AppCompatActivity {
         settingsDialogFragment.show(getSupportFragmentManager(), "");
     }
 
-    private List<AppInfo> getAppInfos() {
-        packageManager = this.getPackageManager();
-        List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
-        List<AppInfo> appInfos = formatToAppInfo(applicationInfos);
-        return appInfos;
-    }
 
-    private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos) {
-        List<AppInfo> formattedAppInfos = new ArrayList<>();
-        for (ApplicationInfo applicationInfo : applicationInfos) {
-            formattedAppInfos.add(new AppInfo(applicationInfo.uid
-                    , applicationInfo.loadLabel(packageManager).toString()
-                    , applicationInfo.loadIcon(packageManager))
-            );
+    private class InstalledAppsAsyncTask extends AsyncTask<Void, Void, InstalledAppsAdapter> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressBar.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         }
-        return formattedAppInfos;
+
+        @Override
+        protected InstalledAppsAdapter doInBackground(Void... params) {
+            List<AppInfo> appInfos = getAppInfos();
+            InstalledAppsAdapter adapter = new InstalledAppsAdapter(appInfos);
+            return adapter;
+        }
+
+        @Override
+        protected void onPostExecute(InstalledAppsAdapter installedAppsAdapter) {
+            super.onPostExecute(installedAppsAdapter);
+            mProgressBar.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+            mRecyclerView.setAdapter(installedAppsAdapter);
+            showSnackBar();
+        }
+
+        private List<AppInfo> getAppInfos() {
+            packageManager = getPackageManager();
+            List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+            List<AppInfo> appInfos = formatToAppInfo(applicationInfos);
+            return appInfos;
+        }
+
+        private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos) {
+            List<AppInfo> formattedAppInfos = new ArrayList<>();
+            for (ApplicationInfo applicationInfo : applicationInfos) {
+                formattedAppInfos.add(new AppInfo(applicationInfo.uid
+                        , applicationInfo.loadLabel(packageManager).toString()
+                        , applicationInfo.loadIcon(packageManager))
+                );
+            }
+            return formattedAppInfos;
+        }
     }
 }
