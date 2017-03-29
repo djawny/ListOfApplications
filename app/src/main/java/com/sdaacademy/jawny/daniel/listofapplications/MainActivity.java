@@ -28,11 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
-    private PackageManager packageManager;
 
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
 
+    private PackageManager packageManager;
     private FragmentActivity fragmentActivity;
 
     @Override
@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected InstalledAppsAdapter doInBackground(Void... params) {
             List<AppInfo> appInfos = getAppInfos();
-            InstalledAppsAdapter adapter = new InstalledAppsAdapter(appInfos, fragmentActivity);
+            InstalledAppsAdapter adapter = new InstalledAppsAdapter(appInfos, getSupportFragmentManager());
             return adapter;
         }
 
