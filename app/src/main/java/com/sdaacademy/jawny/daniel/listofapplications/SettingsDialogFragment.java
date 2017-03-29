@@ -17,6 +17,7 @@ import butterknife.ButterKnife;
 public class SettingsDialogFragment extends DialogFragment {
 
     public static final String TAG = SettingsDialogFragment.class.getSimpleName();
+    public static final String CHECK_BOX = "check_box";
 
     @BindView(R.id.show_app_check_box)
     CheckBox mShowAppCheckBox;
@@ -34,6 +35,7 @@ public class SettingsDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_settings_dialog, null);
         ButterKnife.bind(this, view);
+        final Bundle bundle = new Bundle();
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .setTitle("Settings")
@@ -42,10 +44,12 @@ public class SettingsDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (mShowAppCheckBox.isChecked()) {
                             Log.d(TAG, "checked");
-
+                            bundle.putBoolean(CHECK_BOX, true);
+                            setArguments(bundle);
                         } else {
                             Log.d(TAG, "unchecked");
-
+                            bundle.putBoolean("check_box", false);
+                            setArguments(bundle);
                         }
                     }
                 })
