@@ -16,7 +16,6 @@ import butterknife.ButterKnife;
 public class SettingsDialogFragment extends DialogFragment {
 
     public static final String TAG = SettingsDialogFragment.class.getSimpleName();
-    public static final String CHECK_BOX = "check_box";
 
     @BindView(R.id.show_app_check_box)
     CheckBox mShowAppCheckBox;

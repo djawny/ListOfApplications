@@ -21,8 +21,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.sdaacademy.jawny.daniel.listofapplications.SettingsDialogFragment.CHECK_BOX;
-
 public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.main_activity_layout)
