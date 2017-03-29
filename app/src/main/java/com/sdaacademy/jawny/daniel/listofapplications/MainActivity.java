@@ -85,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
         settingsDialogFragment.show(getSupportFragmentManager(), "");
     }
 
-
     private class InstalledAppsAsyncTask extends AsyncTask<Void, Void, InstalledAppsAdapter> {
 
         @Override
