@@ -42,8 +42,10 @@ public class SettingsDialogFragment extends DialogFragment {
                     public void onClick(DialogInterface dialog, int which) {
                         if (mShowAppCheckBox.isChecked()) {
                             Log.d(TAG, "checked");
+
                         } else {
                             Log.d(TAG, "unchecked");
+
                         }
                     }
                 })
