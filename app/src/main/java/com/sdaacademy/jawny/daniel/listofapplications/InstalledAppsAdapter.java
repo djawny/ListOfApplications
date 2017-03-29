@@ -41,7 +41,7 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppDetailsDialogFragment appDetailsDialogFragment = AppDetailsDialogFragment.newInstance();
+                AppDetailsDialogFragment appDetailsDialogFragment = AppDetailsDialogFragment.newInstance(appInfo);
                 appDetailsDialogFragment.setCancelable(false);
                 appDetailsDialogFragment.show(fragmentActivity.getSupportFragmentManager(), "");
             }

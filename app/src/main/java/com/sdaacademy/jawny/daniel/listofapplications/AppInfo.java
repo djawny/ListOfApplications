@@ -1,8 +1,10 @@
 package com.sdaacademy.jawny.daniel.listofapplications;
 
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class AppInfo {
+public class AppInfo implements Parcelable{
     private int uid;
     private String name;
     private Drawable icon;
@@ -12,6 +14,23 @@ public class AppInfo {
         this.name = name;
         this.icon = icon;
     }
+
+    protected AppInfo(Parcel in) {
+        uid = in.readInt();
+        name = in.readString();
+    }
+
+    public static final Creator<AppInfo> CREATOR = new Creator<AppInfo>() {
+        @Override
+        public AppInfo createFromParcel(Parcel in) {
+            return new AppInfo(in);
+        }
+
+        @Override
+        public AppInfo[] newArray(int size) {
+            return new AppInfo[size];
+        }
+    };
 
     public int getUid() {
         return uid;
@@ -40,5 +59,16 @@ public class AppInfo {
     @Override
     public String toString() {
         return "AppInfo{" + "uid=" + uid + ", name='" + name + '\'' + '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(uid);
+        dest.writeString(name);
     }
 }
