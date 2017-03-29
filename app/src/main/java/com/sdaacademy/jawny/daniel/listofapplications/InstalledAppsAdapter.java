@@ -1,7 +1,8 @@
 package com.sdaacademy.jawny.daniel.listofapplications;
 
+import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +18,13 @@ import butterknife.ButterKnife;
 public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdapter.InstallAppsViewHolder> {
 
     private List<AppInfo> appInfoList = new ArrayList<>();
+    private FragmentActivity fragmentActivity;
 
-    public InstalledAppsAdapter(List<AppInfo> appInfoList) {
+    public InstalledAppsAdapter(List<AppInfo> appInfoList, FragmentActivity fragmentActivity) {
         if (appInfoList != null) {
             this.appInfoList.addAll(appInfoList);
         }
+        this.fragmentActivity = fragmentActivity;
     }
 
     @Override
@@ -32,13 +35,15 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
 
     @Override
     public void onBindViewHolder(InstallAppsViewHolder holder, final int position) {
-        AppInfo appInfo = appInfoList.get(position);
+        final AppInfo appInfo = appInfoList.get(position);
         holder.mName.setText(appInfo.getName());
         holder.mIcon.setImageDrawable(appInfo.getIcon());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                AppDetailsDialogFragment appDetailsDialogFragment = AppDetailsDialogFragment.newInstance();
+                appDetailsDialogFragment.setCancelable(false);
+                appDetailsDialogFragment.show(fragmentActivity.getSupportFragmentManager(), "");
             }
         });
     }

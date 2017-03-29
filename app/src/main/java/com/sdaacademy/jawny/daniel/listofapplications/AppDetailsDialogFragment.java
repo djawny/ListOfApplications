@@ -24,6 +24,8 @@ public class AppDetailsDialogFragment extends DialogFragment {
     @BindView(R.id.app_icon)
     ImageView mIcon;
 
+//    AppInfo appInfo;
+
     public AppDetailsDialogFragment() {
         // Required empty public constructor
     }
@@ -37,6 +39,10 @@ public class AppDetailsDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_app_details_dialog, null);
         ButterKnife.bind(this, view);
+
+//        mUid.setText(appInfo.getUid());
+//        mName.setText(appInfo.getName());
+//        mIcon.setImageDrawable(appInfo.getIcon());
 
         return new AlertDialog.Builder(getActivity())
                 .setView(view)

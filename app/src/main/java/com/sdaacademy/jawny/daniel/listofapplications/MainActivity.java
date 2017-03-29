@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -32,11 +33,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
 
+    private FragmentActivity fragmentActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        fragmentActivity = this;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         inflateRecycleView();
     }
@@ -47,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSnackBar() {
-        final Snackbar snackbar = Snackbar.make(mMainLayout, "Snackbar", Snackbar.LENGTH_INDEFINITE);
+        final Snackbar snackbar = Snackbar.make(mMainLayout, "List have been loaded", Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction("Ok", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
         settingsDialogFragment.show(getSupportFragmentManager(), "");
     }
 
+
     private class InstalledAppsAsyncTask extends AsyncTask<Void, Void, InstalledAppsAdapter> {
 
         @Override
@@ -91,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected InstalledAppsAdapter doInBackground(Void... params) {
             List<AppInfo> appInfos = getAppInfos();
-            InstalledAppsAdapter adapter = new InstalledAppsAdapter(appInfos);
+            InstalledAppsAdapter adapter = new InstalledAppsAdapter(appInfos, fragmentActivity);
             return adapter;
         }
 
