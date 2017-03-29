@@ -1,6 +1,7 @@
 package com.sdaacademy.jawny.daniel.listofapplications;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,10 +31,16 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
     }
 
     @Override
-    public void onBindViewHolder(InstallAppsViewHolder holder, int position) {
+    public void onBindViewHolder(InstallAppsViewHolder holder, final int position) {
         AppInfo appInfo = appInfoList.get(position);
         holder.mName.setText(appInfo.getName());
         holder.mIcon.setImageDrawable(appInfo.getIcon());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override
