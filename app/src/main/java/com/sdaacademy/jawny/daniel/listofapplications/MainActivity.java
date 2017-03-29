@@ -22,8 +22,6 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String TAG = MainActivity.class.getSimpleName();
-
     @BindView(R.id.main_activity_layout)
     CoordinatorLayout mMainLayout;
 
@@ -80,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         settingsDialogFragment.setCancelable(false);
         settingsDialogFragment.show(getSupportFragmentManager(), "");
     }
-
 
     private class InstalledAppsAsyncTask extends AsyncTask<Void, Void, InstalledAppsAdapter> {
 
