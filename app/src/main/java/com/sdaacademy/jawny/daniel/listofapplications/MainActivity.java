@@ -2,6 +2,7 @@ package com.sdaacademy.jawny.daniel.listofapplications;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -47,18 +48,11 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
 
     private void inflateRecycleView() {
         InstalledAppsAsyncTask installedAppsAsyncTask = new InstalledAppsAsyncTask();
-        installedAppsAsyncTask.execute();
+        installedAppsAsyncTask.execute(true);
     }
 
-    private void showSnackBar() {
-        final Snackbar snackbar = Snackbar.make(mMainLayout, "Applications have been loaded.", Snackbar.LENGTH_INDEFINITE);
-        snackbar.setAction("Ok", new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-        snackbar.show();
+    private void showSnackBar(String message) {
+        Snackbar.make(mMainLayout, message, Snackbar.LENGTH_LONG).show();
     }
 
     @Override
@@ -85,14 +79,24 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
 
     @Override
     public void onCheckChange(boolean isChecked) {
-        if(isChecked){
-
-        }else {
-
+        if (isChecked) {
+            showAllApps();
+        } else {
+            showUserApps();
         }
     }
 
-    private class InstalledAppsAsyncTask extends AsyncTask<Void, Void, InstalledAppsAdapter> {
+    public void showAllApps() {
+        InstalledAppsAsyncTask installedAppsAsyncTask = new InstalledAppsAsyncTask();
+        installedAppsAsyncTask.execute(true);
+    }
+
+    public void showUserApps() {
+        InstalledAppsAsyncTask installedAppsAsyncTask = new InstalledAppsAsyncTask();
+        installedAppsAsyncTask.execute(false);
+    }
+
+    private class InstalledAppsAsyncTask extends AsyncTask<Boolean, Void, InstalledAppsAdapter> {
 
         @Override
         protected void onPreExecute() {
@@ -102,8 +106,8 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         }
 
         @Override
-        protected InstalledAppsAdapter doInBackground(Void... params) {
-            List<AppInfo> appInfos = getAppInfos();
+        protected InstalledAppsAdapter doInBackground(Boolean... params) {
+            List<AppInfo> appInfos = getAppInfos(params[0]);
             InstalledAppsAdapter adapter = new InstalledAppsAdapter(appInfos, getSupportFragmentManager());
             return adapter;
         }
@@ -114,25 +118,32 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
             mProgressBar.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
             mRecyclerView.setAdapter(installedAppsAdapter);
-            showSnackBar();
+            showSnackBar("Applications have been loaded.");
         }
 
-        private List<AppInfo> getAppInfos() {
+        private List<AppInfo> getAppInfos(boolean onlyUserApps) {
             packageManager = getPackageManager();
             List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
-            List<AppInfo> appInfos = formatToAppInfo(applicationInfos);
+            List<AppInfo> appInfos = formatToAppInfo(applicationInfos, onlyUserApps);
             return appInfos;
         }
 
-        private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos) {
+        private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos, boolean onlyUserApps) {
             List<AppInfo> formattedAppInfos = new ArrayList<>();
             for (ApplicationInfo applicationInfo : applicationInfos) {
+                if (onlyUserApps && isUserApplication(applicationInfo)) {
+                    continue;
+                }
                 formattedAppInfos.add(new AppInfo(applicationInfo.uid
                         , applicationInfo.loadLabel(packageManager).toString()
                         , applicationInfo.loadIcon(packageManager))
                 );
             }
             return formattedAppInfos;
+        }
+
+        private boolean isUserApplication(ApplicationInfo applicationInfo) {
+            return (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
         }
     }
 }
