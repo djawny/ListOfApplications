@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos, boolean onlyUserApps) {
             List<AppInfo> formattedAppInfos = new ArrayList<>();
             for (ApplicationInfo applicationInfo : applicationInfos) {
-                if (onlyUserApps && isUserApplication(applicationInfo)) {
+                if (onlyUserApps && !isUserApplication(applicationInfo)) {
                     continue;
                 }
                 formattedAppInfos.add(new AppInfo(applicationInfo.uid
