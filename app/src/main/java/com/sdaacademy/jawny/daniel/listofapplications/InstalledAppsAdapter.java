@@ -1,5 +1,6 @@
 package com.sdaacademy.jawny.daniel.listofapplications;
 
+import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,6 +38,12 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
         final AppInfo appInfo = appInfoList.get(position);
         holder.mName.setText(appInfo.getName());
         holder.mIcon.setImageDrawable(appInfo.getIcon());
+
+        if (position % 2 == 0) {
+            holder.itemView.setBackgroundColor(Color.BLACK);
+            holder.itemView.getBackground().setAlpha(10);
+        }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
