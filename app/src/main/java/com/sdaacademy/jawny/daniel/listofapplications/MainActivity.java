@@ -1,5 +1,6 @@
 package com.sdaacademy.jawny.daniel.listofapplications;
 
+import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -22,6 +23,9 @@ import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements SettingsDialogFragment.OnSettingsListener {
 
+    public static final String APP_SETTINGS = "app_settings";
+    public static final String IS_CHECKED = "is_checked";
+
     @BindView(R.id.main_activity_layout)
     CoordinatorLayout mMainLayout;
 
@@ -39,7 +43,12 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        displayApps(false);
+        displayApps(getSettingsSharedPreferences());
+    }
+
+    private boolean getSettingsSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
+        return sharedPreferences.getBoolean(IS_CHECKED, false);
     }
 
     private void showSnackBar(String message) {
