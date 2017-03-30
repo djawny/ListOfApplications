@@ -55,6 +55,7 @@ public class SettingsDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_settings_dialog, null);
         ButterKnife.bind(this, view);
+        mShowAppCheckBox.setChecked(getSettingsSharedPreferences());
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .setTitle("Settings")
@@ -75,5 +76,10 @@ public class SettingsDialogFragment extends DialogFragment {
         edit.clear();
         edit.putBoolean(IS_CHECKED, isChecked);
         edit.apply();
+    }
+
+    private boolean getSettingsSharedPreferences() {
+        SharedPreferences sharedPreferences = mainActivity.getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
+        return sharedPreferences.getBoolean(IS_CHECKED, false);
     }
 }
