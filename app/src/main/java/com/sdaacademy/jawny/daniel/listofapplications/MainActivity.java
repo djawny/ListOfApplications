@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
     ProgressBar mProgressBar;
 
     private PackageManager packageManager;
-    private InstalledAppsAsyncTask installedAppsAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
     }
 
     private void displayApps(boolean isChecked) {
-        installedAppsAsyncTask = new InstalledAppsAsyncTask();
+        InstalledAppsAsyncTask installedAppsAsyncTask = new InstalledAppsAsyncTask();
         installedAppsAsyncTask.execute(isChecked);
     }
 
