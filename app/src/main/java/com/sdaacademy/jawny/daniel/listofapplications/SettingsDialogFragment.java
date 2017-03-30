@@ -1,6 +1,5 @@
 package com.sdaacademy.jawny.daniel.listofapplications;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -18,10 +17,15 @@ import butterknife.ButterKnife;
 
 public class SettingsDialogFragment extends DialogFragment {
 
+    public interface OnSettingsListener {
+        void onCheckChange(boolean isChecked);
+    }
+
     public static final String TAG = SettingsDialogFragment.class.getSimpleName();
 
     @BindView(R.id.show_app_check_box)
     CheckBox mShowAppCheckBox;
+
     private MainActivity mainActivity;
 
     public SettingsDialogFragment() {
@@ -48,16 +52,6 @@ public class SettingsDialogFragment extends DialogFragment {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_settings_dialog, null);
         ButterKnife.bind(this, view);
         mShowAppCheckBox.setChecked(true);
-        mShowAppCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    mainActivity.showAllApps();
-                } else {
-                    mainActivity.showUserApps();
-                }
-            }
-        });
 
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
@@ -65,7 +59,7 @@ public class SettingsDialogFragment extends DialogFragment {
                 .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        mainActivity.onCheckChange(mShowAppCheckBox.isChecked());
                     }
                 })
                 .create();

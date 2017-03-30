@@ -21,7 +21,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SettingsDialogFragment.OnSettingsListener {
 
     @BindView(R.id.main_activity_layout)
     CoordinatorLayout mMainLayout;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSnackBar() {
-        final Snackbar snackbar = Snackbar.make(mMainLayout, "List have been loaded", Snackbar.LENGTH_INDEFINITE);
+        final Snackbar snackbar = Snackbar.make(mMainLayout, "Applications have been loaded.", Snackbar.LENGTH_INDEFINITE);
         snackbar.setAction("Ok", new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,12 +83,13 @@ public class MainActivity extends AppCompatActivity {
         settingsDialogFragment.show(getSupportFragmentManager(), "");
     }
 
-    public void showAllApps() {
+    @Override
+    public void onCheckChange(boolean isChecked) {
+        if(isChecked){
 
-    }
+        }else {
 
-    public void showUserApps() {
-
+        }
     }
 
     private class InstalledAppsAsyncTask extends AsyncTask<Void, Void, InstalledAppsAdapter> {
