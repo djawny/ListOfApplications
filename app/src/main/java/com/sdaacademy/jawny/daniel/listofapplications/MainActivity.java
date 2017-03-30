@@ -34,21 +34,15 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
     ProgressBar mProgressBar;
 
     private PackageManager packageManager;
-    private FragmentActivity fragmentActivity;
+    private InstalledAppsAsyncTask installedAppsAsyncTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        fragmentActivity = this;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        inflateRecycleView();
-    }
-
-    private void inflateRecycleView() {
-        InstalledAppsAsyncTask installedAppsAsyncTask = new InstalledAppsAsyncTask();
-        installedAppsAsyncTask.execute(true);
+        displayApps(true);
     }
 
     private void showSnackBar(String message) {
@@ -79,21 +73,12 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
 
     @Override
     public void onCheckChange(boolean isChecked) {
-        if (isChecked) {
-            showAllApps();
-        } else {
-            showUserApps();
-        }
+        displayApps(isChecked);
     }
 
-    public void showAllApps() {
-        InstalledAppsAsyncTask installedAppsAsyncTask = new InstalledAppsAsyncTask();
-        installedAppsAsyncTask.execute(true);
-    }
-
-    public void showUserApps() {
-        InstalledAppsAsyncTask installedAppsAsyncTask = new InstalledAppsAsyncTask();
-        installedAppsAsyncTask.execute(false);
+    private void displayApps(boolean isChecked) {
+        installedAppsAsyncTask = new InstalledAppsAsyncTask();
+        installedAppsAsyncTask.execute(isChecked);
     }
 
     private class InstalledAppsAsyncTask extends AsyncTask<Boolean, Void, InstalledAppsAdapter> {
