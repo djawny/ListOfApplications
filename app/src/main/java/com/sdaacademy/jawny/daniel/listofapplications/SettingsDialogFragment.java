@@ -51,8 +51,6 @@ public class SettingsDialogFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View view = getActivity().getLayoutInflater().inflate(R.layout.fragment_settings_dialog, null);
         ButterKnife.bind(this, view);
-        mShowAppCheckBox.setChecked(true);
-
         return new AlertDialog.Builder(getActivity())
                 .setView(view)
                 .setTitle("Settings")

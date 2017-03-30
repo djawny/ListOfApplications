@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        displayApps(true);
+        displayApps(false);
     }
 
     private void showSnackBar(String message) {
@@ -75,9 +75,9 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         displayApps(isChecked);
     }
 
-    private void displayApps(boolean isChecked) {
+    private void displayApps(boolean addSystemApps) {
         InstalledAppsAsyncTask installedAppsAsyncTask = new InstalledAppsAsyncTask();
-        installedAppsAsyncTask.execute(isChecked);
+        installedAppsAsyncTask.execute(addSystemApps);
     }
 
     private class InstalledAppsAsyncTask extends AsyncTask<Boolean, Void, InstalledAppsAdapter> {
@@ -105,17 +105,17 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
             showSnackBar("Applications have been loaded.");
         }
 
-        private List<AppInfo> getAppInfos(boolean onlyUserApps) {
+        private List<AppInfo> getAppInfos(boolean addSystemApps) {
             packageManager = getPackageManager();
             List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
-            List<AppInfo> appInfos = formatToAppInfo(applicationInfos, onlyUserApps);
+            List<AppInfo> appInfos = formatToAppInfo(applicationInfos, addSystemApps);
             return appInfos;
         }
 
-        private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos, boolean onlyUserApps) {
+        private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos, boolean addSystemApps) {
             List<AppInfo> formattedAppInfos = new ArrayList<>();
             for (ApplicationInfo applicationInfo : applicationInfos) {
-                if (onlyUserApps && !isUserApplication(applicationInfo)) {
+                if (!addSystemApps && !isUserApplication(applicationInfo)) {
                     continue;
                 }
                 formattedAppInfos.add(new AppInfo(applicationInfo.uid
