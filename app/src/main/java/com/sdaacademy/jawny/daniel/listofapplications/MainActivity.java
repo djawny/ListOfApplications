@@ -2,12 +2,10 @@ package com.sdaacademy.jawny.daniel.listofapplications;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -115,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         private List<AppInfo> formatToAppInfo(List<ApplicationInfo> applicationInfos, boolean addSystemApps) {
             List<AppInfo> formattedAppInfos = new ArrayList<>();
             for (ApplicationInfo applicationInfo : applicationInfos) {
-                if (!addSystemApps && !isUserApplication(applicationInfo)) {
+                if (!addSystemApps && isSystemApplication(applicationInfo)) {
                     continue;
                 }
                 formattedAppInfos.add(new AppInfo(applicationInfo.uid
@@ -126,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
             return formattedAppInfos;
         }
 
-        private boolean isUserApplication(ApplicationInfo applicationInfo) {
+        private boolean isSystemApplication(ApplicationInfo applicationInfo) {
             return (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
         }
     }
