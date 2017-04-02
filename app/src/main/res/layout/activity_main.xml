@@ -17,6 +17,6 @@
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/ic_archive_black_24dp"/>
+        android:background="@drawable/recycle_view_background"/>
 
 </android.support.design.widget.CoordinatorLayout>
