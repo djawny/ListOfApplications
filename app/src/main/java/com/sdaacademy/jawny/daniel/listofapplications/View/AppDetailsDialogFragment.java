@@ -1,4 +1,4 @@
-package com.sdaacademy.jawny.daniel.listofapplications;
+package com.sdaacademy.jawny.daniel.listofapplications.View;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +11,9 @@ import android.support.v4.app.DialogFragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.sdaacademy.jawny.daniel.listofapplications.Model.AppInfo;
+import com.sdaacademy.jawny.daniel.listofapplications.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

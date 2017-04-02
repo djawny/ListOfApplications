@@ -1,6 +1,5 @@
-package com.sdaacademy.jawny.daniel.listofapplications;
+package com.sdaacademy.jawny.daniel.listofapplications.Adapter;
 
-import android.graphics.Color;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.sdaacademy.jawny.daniel.listofapplications.View.AppDetailsDialogFragment;
+import com.sdaacademy.jawny.daniel.listofapplications.Model.AppInfo;
+import com.sdaacademy.jawny.daniel.listofapplications.R;
 
 import java.util.ArrayList;
 import java.util.List;

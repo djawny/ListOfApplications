@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:padding="8dp"
     android:weightSum="10"
-    tools:context="com.sdaacademy.jawny.daniel.listofapplications.AppDetailsDialogFragment">
+    tools:context="com.sdaacademy.jawny.daniel.listofapplications.View.AppDetailsDialogFragment">
 
     <ImageView
         android:id="@+id/app_icon"

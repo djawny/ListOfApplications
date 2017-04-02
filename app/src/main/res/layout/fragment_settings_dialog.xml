@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context="com.sdaacademy.jawny.daniel.listofapplications.SettingsDialogFragment">
+    tools:context="com.sdaacademy.jawny.daniel.listofapplications.View.SettingsDialogFragment">
 
     <CheckBox
         android:id="@+id/show_app_check_box"

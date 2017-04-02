@@ -1,4 +1,4 @@
-package com.sdaacademy.jawny.daniel.listofapplications;
+package com.sdaacademy.jawny.daniel.listofapplications.View;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -12,12 +12,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 
+import com.sdaacademy.jawny.daniel.listofapplications.R;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.sdaacademy.jawny.daniel.listofapplications.MainActivity.APP_SETTINGS;
-import static com.sdaacademy.jawny.daniel.listofapplications.MainActivity.IS_CHECKED;
 
 public class SettingsDialogFragment extends DialogFragment {
 
@@ -74,15 +74,15 @@ public class SettingsDialogFragment extends DialogFragment {
     }
 
     private void saveSettingsSharedPreferences(boolean isChecked) {
-        SharedPreferences sharedPreferences = mainActivity.getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
+        SharedPreferences sharedPreferences = mainActivity.getSharedPreferences(MainActivity.APP_SETTINGS, MODE_PRIVATE);
         SharedPreferences.Editor edit = sharedPreferences.edit();
         edit.clear();
-        edit.putBoolean(IS_CHECKED, isChecked);
+        edit.putBoolean(MainActivity.IS_CHECKED, isChecked);
         edit.apply();
     }
 
     private boolean getSettingsSharedPreferences() {
-        SharedPreferences sharedPreferences = mainActivity.getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
-        return sharedPreferences.getBoolean(IS_CHECKED, false);
+        SharedPreferences sharedPreferences = mainActivity.getSharedPreferences(MainActivity.APP_SETTINGS, MODE_PRIVATE);
+        return sharedPreferences.getBoolean(MainActivity.IS_CHECKED, false);
     }
 }

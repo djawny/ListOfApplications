@@ -1,4 +1,4 @@
-package com.sdaacademy.jawny.daniel.listofapplications;
+package com.sdaacademy.jawny.daniel.listofapplications.View;
 
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
@@ -14,6 +14,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import com.sdaacademy.jawny.daniel.listofapplications.Adapter.InstalledAppsAdapter;
+import com.sdaacademy.jawny.daniel.listofapplications.Model.AppInfo;
+import com.sdaacademy.jawny.daniel.listofapplications.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.sdaacademy.jawny.daniel.listofapplications;
+package com.sdaacademy.jawny.daniel.listofapplications.Model;
 
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
