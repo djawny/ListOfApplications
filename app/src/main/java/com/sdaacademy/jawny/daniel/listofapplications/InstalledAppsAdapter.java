@@ -39,10 +39,10 @@ public class InstalledAppsAdapter extends RecyclerView.Adapter<InstalledAppsAdap
         holder.mName.setText(appInfo.getName());
         holder.mIcon.setImageDrawable(appInfo.getIcon());
 
-        if (position % 2 == 0) {
-            holder.itemView.setBackgroundColor(Color.BLACK);
-            holder.itemView.getBackground().setAlpha(10);
-        }
+//        if (position % 2 == 0) {
+//            holder.itemView.setBackgroundColor(Color.BLACK);
+//            holder.itemView.getBackground().setAlpha(10);
+//        }
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
