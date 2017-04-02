@@ -1,6 +1,5 @@
 package com.sdaacademy.jawny.daniel.listofapplications;
 
-import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -13,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,9 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
 
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.progress_bar)
+    ProgressBar mProgressBar;
 
     private PackageManager packageManager;
 
@@ -85,13 +89,11 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
 
     private class InstalledAppsAsyncTask extends AsyncTask<Boolean, Void, InstalledAppsAdapter> {
 
-        private ProgressDialog progressDialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            setProgressBar();
-            progressDialog.show();
+            mRecyclerView.setVisibility(View.GONE);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -104,18 +106,10 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         @Override
         protected void onPostExecute(InstalledAppsAdapter installedAppsAdapter) {
             super.onPostExecute(installedAppsAdapter);
-            if (progressDialog.isShowing()) {
-                progressDialog.dismiss();
-            }
             mRecyclerView.setAdapter(installedAppsAdapter);
+            mProgressBar.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.VISIBLE);
             showSnackBar("Applications have been loaded.");
-        }
-
-        private void setProgressBar() {
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setTitle("Please Wait...");
-            progressDialog.setMessage("Loading data...");
-            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         }
 
         private List<AppInfo> getAppInfos(boolean addSystemApps) {
