@@ -5,8 +5,8 @@
     android:layout_height="60dp"
     android:layout_margin="2dp"
     card_view:cardBackgroundColor="@android:color/transparent"
-    card_view:cardElevation="@dimen/cardview_default_elevation"
-    card_view:cardCornerRadius="5dp">
+    card_view:cardCornerRadius="5dp"
+    card_view:cardElevation="@dimen/cardview_default_elevation">
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tool="http://schemas.android.com/tools"
