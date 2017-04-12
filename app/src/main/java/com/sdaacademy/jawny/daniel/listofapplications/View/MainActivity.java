@@ -1,5 +1,6 @@
 package com.sdaacademy.jawny.daniel.listofapplications.View;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -13,7 +14,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ProgressBar;
 
 import com.sdaacademy.jawny.daniel.listofapplications.Adapter.InstalledAppsAdapter;
 import com.sdaacademy.jawny.daniel.listofapplications.Model.AppInfo;
@@ -36,10 +36,8 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
 
-    @BindView(R.id.progress_bar)
-    ProgressBar mProgressBar;
-
     private PackageManager packageManager;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +48,10 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         displayApps(getSettingsSharedPreferences());
     }
 
-    private boolean getSettingsSharedPreferences() {
-        SharedPreferences sharedPreferences = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
-        return sharedPreferences.getBoolean(IS_CHECKED, false);
-    }
-
-    private void showSnackBar(String message) {
-        Snackbar.make(mMainLayout, message, Snackbar.LENGTH_LONG).show();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dismissProgressDialog();
     }
 
     @Override
@@ -75,15 +70,24 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCheckChange(boolean isChecked) {
+        displayApps(isChecked);
+    }
+
+    private boolean getSettingsSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences(APP_SETTINGS, MODE_PRIVATE);
+        return sharedPreferences.getBoolean(IS_CHECKED, false);
+    }
+
+    private void showSnackBar(String message) {
+        Snackbar.make(mMainLayout, message, Snackbar.LENGTH_LONG).show();
+    }
+
     private void openSettings() {
         SettingsDialogFragment settingsDialogFragment = SettingsDialogFragment.newInstance();
         settingsDialogFragment.setCancelable(false);
         settingsDialogFragment.show(getSupportFragmentManager(), "");
-    }
-
-    @Override
-    public void onCheckChange(boolean isChecked) {
-        displayApps(isChecked);
     }
 
     private void displayApps(boolean addSystemApps) {
@@ -91,13 +95,30 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         installedAppsAsyncTask.execute(addSystemApps);
     }
 
+    public void showProgressDialog() {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(MainActivity.this);
+            mProgressDialog.setIndeterminate(true);
+            mProgressDialog.setCancelable(false);
+        }
+        mProgressDialog.setTitle(getString(R.string.please_wait));
+        mProgressDialog.setMessage(getString(R.string.loading_data));
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.show();
+    }
+
+    public void dismissProgressDialog() {
+        if (mProgressDialog != null ) {
+            mProgressDialog.dismiss();
+        }}
+
     private class InstalledAppsAsyncTask extends AsyncTask<Boolean, Void, InstalledAppsAdapter> {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             mRecyclerView.setVisibility(View.GONE);
-            mProgressBar.setVisibility(View.VISIBLE);
+            showProgressDialog();
         }
 
         @Override
@@ -111,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         protected void onPostExecute(InstalledAppsAdapter installedAppsAdapter) {
             super.onPostExecute(installedAppsAdapter);
             mRecyclerView.setAdapter(installedAppsAdapter);
-            mProgressBar.setVisibility(View.GONE);
             mRecyclerView.setVisibility(View.VISIBLE);
+            dismissProgressDialog();
             showSnackBar("Applications have been loaded.");
         }
 

@@ -6,13 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.sdaacademy.jawny.daniel.listofapplications.View.MainActivity">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleX="0.3"
-        android:scaleY="0.3" />
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycle_view"
         android:layout_width="match_parent"
