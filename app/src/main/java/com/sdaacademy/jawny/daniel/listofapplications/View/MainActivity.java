@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
 
     private PackageManager packageManager;
     private ProgressDialog mProgressDialog;
+    private boolean mPullRefreshing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +50,8 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        setPullRefresh();
         displayApps(getSettingsSharedPreferences());
-        refresh();
-    }
-
-    private void refresh() {
-        mPullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                displayApps(getSettingsSharedPreferences());
-            }
-        });
     }
 
     @Override
@@ -122,9 +114,24 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
     }
 
     public void dismissProgressDialog() {
-        if (mProgressDialog != null ) {
+        if (mProgressDialog != null) {
             mProgressDialog.dismiss();
-        }}
+        }
+    }
+
+    private void setPullRefresh() {
+        mPullRefreshing = false;
+        mPullRefreshLayout.setRefreshStyle(PullRefreshLayout.STYLE_MATERIAL);
+        mPullRefreshLayout.setOnRefreshListener(() -> {
+            mPullRefreshing = true;
+            displayApps(getSettingsSharedPreferences());
+        });
+    }
+
+    private void dismissPullRefresh() {
+        mPullRefreshLayout.setRefreshing(false);
+        mPullRefreshing = false;
+    }
 
     private class InstalledAppsAsyncTask extends AsyncTask<Boolean, Void, InstalledAppsAdapter> {
 
@@ -132,7 +139,9 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         protected void onPreExecute() {
             super.onPreExecute();
             mRecyclerView.setVisibility(View.GONE);
-            showProgressDialog();
+            if (!mPullRefreshing) {
+                showProgressDialog();
+            }
         }
 
         @Override
@@ -147,8 +156,11 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
             super.onPostExecute(installedAppsAdapter);
             mRecyclerView.setAdapter(installedAppsAdapter);
             mRecyclerView.setVisibility(View.VISIBLE);
-            dismissProgressDialog();
-            mPullRefreshLayout.setRefreshing(false);
+            if (!mPullRefreshing) {
+                dismissProgressDialog();
+            } else {
+                dismissPullRefresh();
+            }
             showSnackBar("Applications have been loaded.");
         }
 
@@ -176,5 +188,6 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         private boolean isSystemApplication(ApplicationInfo applicationInfo) {
             return (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
         }
+
     }
 }
