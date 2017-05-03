@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.baoyz.widget.PullRefreshLayout;
 import com.sdaacademy.jawny.daniel.listofapplications.Adapter.InstalledAppsAdapter;
 import com.sdaacademy.jawny.daniel.listofapplications.Model.AppInfo;
 import com.sdaacademy.jawny.daniel.listofapplications.R;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
     @BindView(R.id.recycle_view)
     RecyclerView mRecyclerView;
 
+    @BindView(R.id.refresh_layout)
+    PullRefreshLayout mPullRefreshLayout;
+
     private PackageManager packageManager;
     private ProgressDialog mProgressDialog;
 
@@ -46,6 +50,16 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         ButterKnife.bind(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         displayApps(getSettingsSharedPreferences());
+        refresh();
+    }
+
+    private void refresh() {
+        mPullRefreshLayout.setOnRefreshListener(new PullRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                displayApps(getSettingsSharedPreferences());
+            }
+        });
     }
 
     @Override
@@ -134,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
             mRecyclerView.setAdapter(installedAppsAdapter);
             mRecyclerView.setVisibility(View.VISIBLE);
             dismissProgressDialog();
+            mPullRefreshLayout.setRefreshing(false);
             showSnackBar("Applications have been loaded.");
         }
 
