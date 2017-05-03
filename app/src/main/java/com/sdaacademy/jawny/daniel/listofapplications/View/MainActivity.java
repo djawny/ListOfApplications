@@ -188,6 +188,5 @@ public class MainActivity extends AppCompatActivity implements SettingsDialogFra
         private boolean isSystemApplication(ApplicationInfo applicationInfo) {
             return (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
         }
-
     }
 }
